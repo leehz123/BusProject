@@ -10,7 +10,7 @@ public class MonthComboBox extends JComboBox<Integer> {
 	final private static int JAN = 1;
 	final private static int DEC = 12;
 	final private static Color BACK_COLOR = Color.WHITE;
-	private Dimension dimension = new Dimension(150,30);
+	private Dimension dimension = new Dimension(110,30);
 	
 	public MonthComboBox() {
 		setBackground(BACK_COLOR);

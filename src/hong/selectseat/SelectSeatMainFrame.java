@@ -90,6 +90,9 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
+		add(new BackGroundLabel("", 10, 50, 30));
+		add(new BackGroundLabel("ÁÂ¼® ¼±ÅÃ", 400, 50, 30));
+		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			seatBtn = new SeatButton();
 			seatBtns[i] = seatBtn;
@@ -102,7 +105,7 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			if (i % 3 == 2) {
-				add(new BackGroundLabel("", 90, 69));
+				add(new BackGroundLabel("", 90, 69, 0));
 			} 
 			
 			add(seatBtns[i]);
@@ -112,13 +115,20 @@ public class SelectSeatMainFrame extends JFrame {
 			}
 		}
 		
+		nextBtn.setBackground(Color.WHITE);
+		nextBtn.setForeground(Color.BLACK);
+		
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
+		
+		beforeBtn.setBackground(Color.WHITE);
+		beforeBtn.setForeground(Color.BLACK);
 		
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);
 		
-		setBounds(300, 100, 450, 700);
+		setSize(450, 720);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -138,7 +148,7 @@ public class SelectSeatMainFrame extends JFrame {
 			while (rs.next()) {
 				bs_id_list.add(rs.getInt("bs_id"));
 				bs_is_reserved.add(rs.getInt("bs_is_reserved"));
-				bs_name_list.add(rs.getString("bs_name"));
+				bs_name_list.add(((Integer)rs.getInt("bs_name")).toString());
 			}
 			
 		} catch (SQLException e) {
