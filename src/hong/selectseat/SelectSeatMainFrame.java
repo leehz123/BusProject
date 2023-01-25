@@ -102,7 +102,7 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			if (i % 3 == 2) {
-				add(new BackGroundLabel("", 90, 69));
+				add(new BackGroundLabel("", 90, 69, 0));
 			} 
 			
 			add(seatBtns[i]);
@@ -112,13 +112,20 @@ public class SelectSeatMainFrame extends JFrame {
 			}
 		}
 		
+		nextBtn.setBackground(Color.WHITE);
+		nextBtn.setForeground(Color.BLACK);
+		
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
+		
+		beforeBtn.setBackground(Color.WHITE);
+		beforeBtn.setForeground(Color.BLACK);
 		
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);
 		
-		setBounds(300, 100, 450, 700);
+		setSize(450, 700);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
