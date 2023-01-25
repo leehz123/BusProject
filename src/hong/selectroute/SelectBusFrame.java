@@ -34,7 +34,8 @@ public class SelectBusFrame extends JFrame {
 		add(new ColumnNameLabel("예약하기"));
 		
 		
-		setBounds(300, 100, 440, 550);
+		setSize(440, 550);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -42,9 +43,9 @@ public class SelectBusFrame extends JFrame {
 	}
 	
 	// 버스 시간, 버스 id를 불러오는 메서드
-	public void showBusInfo(int routeID, int month, int day) {
+	public void showBusInfo(int routeID, int year, int month, int day) {
 		
-		String date = String.format("22/%02d/%02d" , month, day);
+		String date = String.format("%d/%02d/%02d" , year-2000, month, day);
 		
 		String sql = "SELECT bi_id, bi_time FROM bus_info WHERE rt_id=? AND bi_day=?";
 

@@ -1,34 +1,35 @@
 package lee.mpcomponents;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import an.OjdbcConnection;
 import hong.SaveInfo;
+import lee.RoundedButton;
 import lee.mpevents.MPcheckboxIL;
 import lee.mpmodel.MPreservationlistModel;
 
 //예매내역 있을 때 패널
-//디비에서 예매내역 데려올 때 오늘 날짜 이후의 예매내역만 가져와야 됨...
 public class MPreservationPanel_2 extends JPanel {
 	 
 	SaveInfo saveInfo;
 	String user_id; 
 	
 	
-	JButton MPreservationcancleBtn = new JButton("예매취소");	
+	RoundedButton MPreservationcancleBtn = new RoundedButton("예매취소");	
 	BorderLayout MPborderlayout = new BorderLayout();
 	
-	//티켓 틀이 되는 패널 (안에 라벨, 쳌박 들어감) 
+	//티켓이 들어갈 공간을 나누고 확보해놓는 패널(박스레이아웃 적용) 
 	JPanel MPreservation_3 = new JPanel();
 	
 	JCheckBox[] cbArr;
@@ -42,8 +43,15 @@ public class MPreservationPanel_2 extends JPanel {
 		BoxLayout MPboxlayout = new BoxLayout(MPreservation_3, BoxLayout.Y_AXIS);		
 		
 		setLayout(MPborderlayout);
+		
+		//스크롤바랑 박스레이아웃 적용한 MPresevation_3패널 설정
 		MPreservation_3.setLayout(MPboxlayout);
+		MPreservation_3.setBackground(Color.WHITE);
 	
+		//스크롤바 배경 설정
+		MPscroll.getVerticalScrollBar().setBackground(Color.WHITE);
+		MPscroll.setBorder(null);	
+		
 		//예매 티켓 수에 따라 레저리스트패널 추가
 		ArrayList<MPreservationlistPanel> MPreservationlistArrList = new ArrayList<>();
 		
@@ -68,7 +76,7 @@ public class MPreservationPanel_2 extends JPanel {
 			cbArr[i] = new JCheckBox(Integer.toString(br_id));//체크박스에 br_id를 텍스트로 담은 다음에 크기를 18, 18로 조절해서 안 보이게 함
 			cbArr[i].setBounds(400, 77, 18, 18);
 			cbArr[i].addItemListener(new MPcheckboxIL()); //MPcheckboxIL 은 아이템리스너 상속 받은 클래스. (쳌박에는 아이템리스너 달 수 있음) 
-			
+			cbArr[i].setBackground(Color.WHITE);
 			//예매 리스트 패널의 라벨 설정
 			MPreservationlistArrList.add(new MPreservationlistPanel(br_id, sqlResults.get(i).toString()));
 			MPreservationlistArrList.get(i).add(cbArr[i]);//체크박스는 여기서 달아줌
@@ -80,8 +88,15 @@ public class MPreservationPanel_2 extends JPanel {
 		
 		
 		MPscroll.getVerticalScrollBar().setUnitIncrement(6);// 스크롤 속도 조절
-
+		//MPscroll.getVerticalScrollBar().setBackground(Color.WHITE);
+		
 		MPreservationcancleBtn.setBorderPainted(false);
+		MPreservationcancleBtn.setBounds(125, 130, 90, 35);
+		MPreservationcancleBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
+		
+		
+		
+		setBackground(Color.WHITE);
 		add(MPreservationcancleBtn, "South");
 		add(MPscroll, "Center");
 		

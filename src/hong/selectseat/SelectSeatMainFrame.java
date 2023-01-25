@@ -1,6 +1,7 @@
 package hong.selectseat;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,12 @@ import javax.swing.JFrame;
 
 import an.OjdbcConnection;
 import hong.BackGroundLabel;
-import hong.BeforeButton;
-import hong.NextButton;
 import hong.SaveInfo;
 import hong.selectroute.SelectRouteMainFrame;
 import hong.selectseat.event.BeforeButtonEvent;
 import hong.selectseat.event.NextButtonEvent;
 import hong.selectseat.event.SeatButtonEvent;
+import lee.RoundedButton;
 import park.frame.Pay;
 
 public class SelectSeatMainFrame extends JFrame {
@@ -37,8 +37,12 @@ public class SelectSeatMainFrame extends JFrame {
 	private ArrayList<Integer> bs_is_reserved = new ArrayList<>();
 	private ArrayList<String> bs_name_list = new ArrayList<>();
 	
-	private NextButton nextBtn = new NextButton();
-	private BeforeButton beforeBtn = new BeforeButton();
+//	private NextButton nextBtn = new NextButton();
+//	private BeforeButton beforeBtn = new BeforeButton();
+	private RoundedButton nextBtn = new RoundedButton("확인");
+	private RoundedButton beforeBtn = new RoundedButton("이전으로");
+	
+	
 	private SeatButtonEvent seatBtnEvent = new SeatButtonEvent(this);
 	private NextButtonEvent nextBtnEvent = new NextButtonEvent(this);
 	private BeforeButtonEvent beforeBtnEvent = new BeforeButtonEvent(this);
@@ -90,6 +94,9 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 		
+		add(new BackGroundLabel("", 10, 50, 30));
+		add(new BackGroundLabel("좌석 선택", 400, 50, 30));
+		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			seatBtn = new SeatButton();
 			seatBtns[i] = seatBtn;
@@ -102,7 +109,7 @@ public class SelectSeatMainFrame extends JFrame {
 		
 		for(int i = 0; i < MAX_SEAT; ++i) {
 			if (i % 3 == 2) {
-				add(new BackGroundLabel("", 90, 69));
+				add(new BackGroundLabel("", 90, 69, 0));
 			} 
 			
 			add(seatBtns[i]);
@@ -112,13 +119,22 @@ public class SelectSeatMainFrame extends JFrame {
 			}
 		}
 		
+		nextBtn.setBackground(Color.WHITE);
+		nextBtn.setForeground(Color.BLACK);
+		
+		nextBtn.setPreferredSize(new Dimension(110,40));
 		nextBtn.addActionListener(nextBtnEvent);
 		add(nextBtn);
 		
+		beforeBtn.setBackground(Color.WHITE);
+		beforeBtn.setForeground(Color.BLACK);
+		
+		beforeBtn.setPreferredSize(new Dimension(110,40));
 		beforeBtn.addActionListener(beforeBtnEvent);
 		add(beforeBtn);
 		
-		setBounds(300, 100, 450, 700);
+		setSize(450, 720);
+		setLocationRelativeTo(null);
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -138,7 +154,7 @@ public class SelectSeatMainFrame extends JFrame {
 			while (rs.next()) {
 				bs_id_list.add(rs.getInt("bs_id"));
 				bs_is_reserved.add(rs.getInt("bs_is_reserved"));
-				bs_name_list.add(rs.getString("bs_name"));
+				bs_name_list.add(((Integer)rs.getInt("bs_name")).toString());
 			}
 			
 		} catch (SQLException e) {

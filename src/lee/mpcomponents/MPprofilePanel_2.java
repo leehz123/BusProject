@@ -10,22 +10,20 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+
+import lee.RoundedButton;
 
 
 public class MPprofilePanel_2 extends JPanel {
 	
-	JButton MPbackBtn = new JButton("뒤로가기");
-	JButton MPcompleteBtn = new JButton("수정완료");
+	RoundedButton MPbackBtn = new RoundedButton("뒤로가기");
+	RoundedButton MPcompleteBtn = new RoundedButton("수정완료");
 	
 	JPanel MPlabelPanel = new JPanel();//레이아웃은 그리드백레이아웃으로
 	
@@ -38,6 +36,10 @@ public class MPprofilePanel_2 extends JPanel {
 	JLabel MPviewLb3 = new JLabel("새 비밀번호 ");
 	JLabel MPviewLb4 = new JLabel("비밀번호 확인 ");
 	
+	
+	
+	
+	
 	JTextField MPnameTf = new JTextField(25);
 	JTextField MPphoneTf_1 = new JTextField(4);
 	JTextField MPphoneTf_2 = new JTextField(4);
@@ -45,7 +47,7 @@ public class MPprofilePanel_2 extends JPanel {
 	JPasswordField MPnewpwTf = new JPasswordField(25);
 	JPasswordField MPchknewpwTf = new JPasswordField(25);
 	
-	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름은 10글자까지 입력 가능합니다.<br>비밀번호는 영문+특수문자+숫자 8자로 구성되어야 합니다.</pre></htnl>"); 
+	JLabel MPprofilerestrictLb = new JLabel("<html><pre style=\"font-family:고딕; font-size:13;\">이름은 10글자까지 입력 가능합니다.<br>비밀번호는 영문+특수문자+숫자 8~20자로 구성되어야 합니다.</pre></htnl>"); 
 	
 	
 	JPanel phoneNumPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -56,12 +58,28 @@ public class MPprofilePanel_2 extends JPanel {
 	public MPprofilePanel_2() {
 		setLayout(null);
 
+		//텍스트필드들 테두리 없애고 배경 설정 
+		MPnameTf.setBackground(new Color(219,219,219));
+		MPnameTf.setBorder(null);
+		MPphoneTf_1.setBackground(new Color(219,219,219));
+		MPphoneTf_1.setBorder(null);
+		MPphoneTf_2.setBackground(new Color(219,219,219));
+		MPphoneTf_2.setBorder(null);
+		MPphoneTf_3.setBackground(new Color(219,219,219));
+		MPphoneTf_3.setBorder(null);
+		MPnewpwTf.setBackground(new Color(219,219,219));
+		MPnewpwTf.setBorder(null);
+		MPchknewpwTf.setBackground(new Color(219,219,219));
+		MPchknewpwTf.setBorder(null);
+		
+		
+		
+		//라벨들 폰트 설정하고 위치 크기 설정 + add
 		MPviewLb1.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb2.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb3.setFont(new Font("고딕", Font.BOLD, 14));
 		MPviewLb4.setFont(new Font("고딕", Font.BOLD, 14));
-		
-		MPprofilerestrictLb.setBounds(80, 350, 400, 85);
+		MPprofilerestrictLb.setBounds(67, 330, 400, 85);
 		add(MPprofilerestrictLb);
 		
 		//새비밀번호 텍스트필드 입력할 때 ●로 표시 
@@ -72,11 +90,9 @@ public class MPprofilePanel_2 extends JPanel {
 		//그리드백레이아웃 적용하는 부분_______________________________________________________________
 		//인풋패널 설정
 		MPlabelPanel.setLayout(new GridLayout());
-		MPlabelPanel.setBounds(10, 5, 480, 300);
+		MPlabelPanel.setBounds(57, 5, 400, 300);
 		MPlabelPanel.setLayout(gbl);
-//		MPlabelPanel.setOpaque(true);
-//		MPlabelPanel.setBackground(Color.BLUE);
-	
+		MPlabelPanel.setBackground(Color.WHITE);
 		//그리드백레이아웃 설정 + 컴포넌트 넣기__________ 
 		gblc.weightx = 1.0; //가로, 세로 패딩? 정하기
 		gblc.weighty = 0.0;
@@ -85,12 +101,12 @@ public class MPprofilePanel_2 extends JPanel {
 		gbInsert(MPviewLb1, 0, 0, 1, 1);
 		gbInsert(MPnameTf, 1, 0, 3, 1);
 		//전화번호 
-		MPphoneTf_1.setSize(100, 100);
         phoneNumPanel.add(MPphoneTf_1);
         phoneNumPanel.add(new JLabel(" - "));
         phoneNumPanel.add(MPphoneTf_2);
         phoneNumPanel.add(new JLabel(" - "));
-        phoneNumPanel.add(MPphoneTf_3);		
+        phoneNumPanel.add(MPphoneTf_3);	
+        phoneNumPanel.setBackground(Color.WHITE);
 		gbInsert(MPviewLb2, 0, 1, 1, 1);
 		gbInsert(phoneNumPanel, 1, 1, 3, 1);		
 		//비밀번호
@@ -150,7 +166,7 @@ public class MPprofilePanel_2 extends JPanel {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				JTextField src = (JTextField) e.getSource();
-				if((src.getText().length() >= 8)) e.consume(); //8글자 제한
+				if((src.getText().length() >= 20)) e.consume(); //20글자 제한
 			}
 			
 			@Override
@@ -158,10 +174,10 @@ public class MPprofilePanel_2 extends JPanel {
 				
 				JTextField src = (JTextField) e.getSource();
 				if (src.getText().equals(MPgetPwd(MPchknewpwTf))) {
-					stateLb.setForeground(Color.GREEN);
+					stateLb.setForeground(new Color(255,158,238));
 					stateLb.setText("비밀번호가 일치합니다.");
 				} else {
-					stateLb.setForeground(Color.RED);
+					stateLb.setForeground(new Color(217,158,255));
 					stateLb.setText("비밀번호가 일치하지 않습니다.");
 				}
 				
@@ -178,7 +194,7 @@ public class MPprofilePanel_2 extends JPanel {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				JTextField src = (JTextField) e.getSource();
-				if((src.getText().length() >= 8)) e.consume(); //8글자 제한
+				if((src.getText().length() >= 20)) e.consume(); //20글자 제한
 			}
 			
 			@Override
@@ -186,10 +202,10 @@ public class MPprofilePanel_2 extends JPanel {
 	
 				JTextField src = (JTextField) e.getSource();
 				if (src.getText().equals(MPgetPwd(MPnewpwTf))) {
-					stateLb.setForeground(Color.GREEN);
+					stateLb.setForeground(new Color(255,158,238));
 					stateLb.setText("비밀번호가 일치합니다.");
 				} else {
-					stateLb.setForeground(Color.RED);
+					stateLb.setForeground(new Color(217,158,255));
 					stateLb.setText("비밀번호가 일치하지 않습니다.");
 				}
 				
@@ -205,16 +221,20 @@ public class MPprofilePanel_2 extends JPanel {
 		
 		
 		//수정완료버튼 설정
-		MPcompleteBtn.setBounds(280, 300, 90, 38);
+		MPcompleteBtn.setBounds(277, 280, 90, 38);
 		MPcompleteBtn.setBorderPainted(false);
+		MPcompleteBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		
 		//뒤로가기 버튼 설정
-		MPbackBtn.setBounds(150, 300, 90, 38 );
+		MPbackBtn.setBounds(147, 280, 90, 38 );
 		MPbackBtn.setBorderPainted(false);
+		MPbackBtn.setFont(new Font("휴먼편지체", Font.BOLD, 17));
 		
 		add(MPcompleteBtn);
 		add(MPbackBtn);
 		add(MPlabelPanel);
+		
+		setBackground(Color.WHITE);
 	}
 	
 	
